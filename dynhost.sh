@@ -9,7 +9,7 @@ if [ "$IP" ]; then
     if [ "$CURRENT_IP" != "$IP" ]; then
         for DOMAIN_NAME in ${DYNHOST_DOMAIN_NAMES}; do
             echo "Updating $DOMAIN_NAME from $CURRENT_IP to $IP" >> dynhost.log
-            curl --user "${DYNHOST_LOGIN}:${DYNHOST_PASSWORD}" "http://www.ovh.com/nic/update?system=dyndns&hostname=${DOMAIN_NAME}&myip=${IP}" >> dynhost.log 2>&1
+            curl --user "${DYNHOST_LOGIN}:${DYNHOST_PASSWORD}" "https://www.ovh.com/nic/update?system=dyndns&hostname=${DOMAIN_NAME}&myip=${IP}" >> dynhost.log 2>&1
         done
     else
         echo "No update required" >> dynhost.log
