@@ -11,9 +11,9 @@ In your OVH domain settings head over to the `DynHost` tab and follow the steps 
 ### Run container
 The image is available via Docker Hub.
 
-```
+```sh
 docker run \
-  -e DYNHOST_DOMAIN_NAME=dynhost.example.com \
+  -e DYNHOST_DOMAIN_NAMES="dynhost1.example.com dynhost2.example.com"\
   -e DYNHOST_LOGIN=login \
   -e DYNHOST_PASSWORD=password \
   --restart always \
@@ -31,7 +31,7 @@ services:
     image: p4sca1/dynhost
     restart: always
     environment:
-      DYNHOST_DOMAIN_NAME: dynhost.example.com
+      DYNHOST_DOMAIN_NAMES: dynhost.example.com
       DYNHOST_LOGIN: login
       DYNHOST_PASSWORD: password
 ```
