@@ -2,14 +2,13 @@
 Docker image to update an OVH dynhost regularly. Based on Alpine linux.
 
 ### Why
-A DynHost is used to assign a dynamic ip to a subdomain.
-This can be very useful to make your local development machine available via a public subdomain.
+A DynHost is used to assign a dynamic ip to multiple (sub)domaine (space separated).
+This can be very useful to make your local development machine available via a public domaine.
 
 ### Configure OVH
 In your OVH domain settings head over to the `DynHost` tab and follow the steps to create your dynhost.
 
 ### Run container
-The image is available via Docker Hub.
 
 ```sh
 docker run \
@@ -28,33 +27,34 @@ version: "3"
 
 services:
   ovh-dynhost:
-    image: p4sca1/dynhost
-    restart: always
+    build:
+      context: https://github.com/PierreMacherel/ovh-dynhost
     environment:
-      DYNHOST_DOMAIN_NAMES: dynhost.example.com
+      DYNHOST_DOMAIN_NAMES: dynhost1.example.com dynhost2.example.com
       DYNHOST_LOGIN: login
       DYNHOST_PASSWORD: password
 ```
 
 Of course you need to insert your credentials.
 
-This will update the dynhost every 15 minutes if the ip changed.
+You could use .env to provide the credentials
+```yml
+version: "3"
 
-### Updating the dynhost manually
-If your ip changed and you can't wait 15 minutes for the next update to happen, you can update the dynhost manually.
+services:
+  ovh-dynhost:
+    build:
+      context: https://github.com/PierreMacherel/ovh-dynhost
+    restart: always
+    environment:
+      DYNHOST_DOMAIN_NAMES: dynhost1.example.com dynhost2.example.com
+    env_file:
+      - <path to env file>
+```
 
-`docker container exec ovh-dynhost ./dynhost.sh`
-
-**Or when using docker-compose:**
-
-`docker-compose exec ovh-dynhost ./dynhost.sh`
+This will update the dynhost at boot and every 15 minutes if the ip changed.
 
 ### Checking for problems
 The docker container will echo debug messages whenever it tries to update the dynhost.
-You can access them via
+If you see `<title>401 Authorization Required</title>` you probably have an error in your credentials.
 
-`docker container exec ovh-dynhost cat /usr/src/app/dynhost.log`
-
-**Or when using docker-compose:**
-
-`docker-compose  exec ovh-dynhost cat /usr/src/app/dynhost.log`
