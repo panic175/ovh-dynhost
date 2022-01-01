@@ -6,7 +6,7 @@
             CURRENT_IP=$(dig +short $DOMAIN_NAME)
             if [ "$CURRENT_IP" != "$IP" ]; then
                     echo "Updating $DOMAIN_NAME from $CURRENT_IP to $IP"
-                    curl -s --user "${DYNHOST_LOGIN}:${DYNHOST_PASSWORD}s" \
+                    curl -s --user "${DYNHOST_LOGIN}:${DYNHOST_PASSWORD}" \
                         "https://www.ovh.com/nic/update?system=dyndns&hostname=${DOMAIN_NAME}&myip=${IP}" \
                         | grep --color=never "title" >&2
             fi
