@@ -10,25 +10,13 @@ In your OVH domain settings head over to the `DynHost` tab and follow the steps 
 
 ### Run container
 
-```sh
-docker run \
-  -e DYNHOST_DOMAIN_NAMES="dynhost1.example.com dynhost2.example.com"\
-  -e DYNHOST_LOGIN=login \
-  -e DYNHOST_PASSWORD=password \
-  --restart always \
-  --name ovh-dynhost \
-  p4sca1/ovh-dynhost
-```
-
-**Or via docker-compose:**
-
 ```yml
 version: "3"
 
 services:
   ovh-dynhost:
     build:
-      context: https://github.com/PierreMacherel/ovh-dynhost
+      context: https://github.com/panic175/ovh-dynhost
     environment:
       DYNHOST_DOMAIN_NAMES: dynhost1.example.com dynhost2.example.com
       DYNHOST_LOGIN: login
@@ -44,7 +32,7 @@ version: "3"
 services:
   ovh-dynhost:
     build:
-      context: https://github.com/PierreMacherel/ovh-dynhost
+      context: https://github.com/panic175/ovh-dynhost
     restart: always
     environment:
       DYNHOST_DOMAIN_NAMES: dynhost1.example.com dynhost2.example.com
