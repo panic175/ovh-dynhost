@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.15.4
 
 RUN apk add --update --no-cache curl bind-tools
 
@@ -13,7 +13,7 @@ ENV STDOUT=/usr/src/app/dynhost.log \
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout $STDOUT \
-	&& ln -sf /dev/stderr $STDERR
+    && ln -sf /dev/stderr $STDERR
 
 RUN ln -sf /usr/src/app/dynhost.sh /etc/periodic/15min/dynhost
 
